@@ -1,11 +1,18 @@
-import React from 'react';
-import {productos} from "../data/productos.js";
+import { useMemo } from 'react';
+import {productos as data} from "../data/productos.js";
 import Producto from "../components/Producto.jsx";
+import useQuiosco from "../hooks/useQuiosco.js";
 
 const Inicio = () => {
+
+    const { categoriaActual } = useQuiosco()
+
+    const productos = useMemo(() => data.filter(producto => producto.categoria_id === categoriaActual.id), [categoriaActual]);
+
+
     return (
         <>
-            <h1 className='text-4xl font-black'>Inicio</h1>
+            <h1 className='text-4xl font-black'>{ categoriaActual.nombre }</h1>
             <p className='text-2xl my-10'>
                 Eligue y personaliza tu pedido a continuación
             </p>

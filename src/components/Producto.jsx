@@ -1,7 +1,10 @@
 import React from 'react'
 import {formatearDinero} from "../helpers/index.js";
+import useQuiosco from "../hooks/useQuiosco.js";
 
 function Producto({ producto }) {
+
+    const { handleClickModal, handleSetProducto } = useQuiosco();
 
     const { nombre, imagen, precio } = producto;
 
@@ -9,6 +12,7 @@ function Producto({ producto }) {
     return (
         <div className={'border p-3 shadow bg-white'}>
             <img
+                loading="lazy"
                 className={'w-full'}
                 src={`/img/${imagen}.jpg`}
                 alt={`Imagen ${nombre}`}
@@ -21,6 +25,10 @@ function Producto({ producto }) {
                 <button
                     type='button'
                     className={'bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold'}
+                    onClick={() => {
+                        handleSetProducto(producto)
+                        handleClickModal()
+                    }}
                 >
                     agregar
                 </button>
