@@ -13,7 +13,7 @@ export default function Resumen() {
 
 
   return (
-    <aside className="w-72 h-screen overflow-y-scroll p-5">
+    <aside className=" w-full md:w-72 h-screen overflow-y-scroll p-5">
       <h1 className='text-4xl font-black'>
         Mi Pedido
       </h1>
