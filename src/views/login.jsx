@@ -1,28 +1,28 @@
 import React, {createRef, useState} from 'react';
 import {Link} from "react-router-dom";
-import clienteAxios from "../config/axios.js";
+import Alerta from "../components/Alerta.jsx";
+import {useAuth} from "../hooks/useAuth.js";
 
 function Login(props) {
 
     const emailRef = createRef();
     const passwordRef = createRef();
+
     const [errores, setErrores] = useState([]);
+    const { login } = useAuth({
+        middleware: 'guest',
+        url: '/'
+    });
 
     const handleSubmit = async e => {
         e.preventDefault();
 
-        const data = {
+        const datos = {
             email: emailRef.current.value,
             password: passwordRef.current.value,
         }
 
-        try {
-            const response = await clienteAxios.post('/api/login', data);
-
-            console.log(response);
-        } catch (error) {
-            setErrores(Object.values(error.response.data.errors))
-        }
+        login(datos, setErrores);
     }
 
 
@@ -37,8 +37,17 @@ function Login(props) {
                 <form
                     onSubmit={handleSubmit}
                     noValidate
+                    method='POST'
                 >
 
+                    {errores ? errores.map(error =>
+                            <Alerta
+                                key={error}
+                            >
+                                {error}
+                            </Alerta>
+                        )
+                    : null}
                     <div className='mb-4'>
                         <label
                             className="text-slate-800"
