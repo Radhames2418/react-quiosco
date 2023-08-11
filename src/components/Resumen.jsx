@@ -1,19 +1,20 @@
-import useQuiosco from "../hooks/useQuiosco.js";
-import producto from "./Producto.jsx";
-import ResumenProducto from "./ResumenProducto.jsx";
-import {formatearDinero} from "../helpers/index.js";
+import useQuiosco from "../hooks/useQuiosco";
+import ResumenProducto from "./ResumenProducto";
+import {formatearDinero} from "../helpers/index";
+import { useAuth } from "../hooks/useAuth";
 
 
 export default function Resumen() {
 
   const { pedido, total, handleSubmitNuevaOrden } = useQuiosco();
+  const { logout } = useAuth({});
 
   const comprobarPedido = () => pedido.length === 0;
 
 
     const handleSubmit = e => {
         e.preventDefault();
-        handleSubmitNuevaOrden();
+        handleSubmitNuevaOrden(logout);
     }
 
     return (

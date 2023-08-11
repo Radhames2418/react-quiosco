@@ -19,6 +19,7 @@ export const useAuth = ({middleware, url}) => {
                 throw Error(error.response?.data?.errors)
             })
     )
+    
     const login = async (datos, setErrores) => {
         try {
             const {data} = await clienteAxios.post('/api/login', datos);
@@ -30,9 +31,9 @@ export const useAuth = ({middleware, url}) => {
         }
     }
 
-    const registro = async (data, setErrores) => {
+    const registro = async (datos, setErrores) => {
         try {
-            const {data} = await clienteAxios.post('/api/registro', data);
+            const {data} = await clienteAxios.post('/api/registro', datos);
             localStorage.setItem('AUTH_TOKEN', data.token);
             setErrores([]);
             await mutate();
@@ -58,6 +59,14 @@ export const useAuth = ({middleware, url}) => {
     useEffect(() => {
         if (middleware === 'guest' && url && user) {
             navigate(url)
+        }
+
+        if (middleware === 'guest'  && user && user.admin) {
+            navigate('/admin')
+        }
+
+        if (middleware === 'admin'  && user && !user.admin) {
+            navigate('/')
         }
 
         if (middleware === 'auth' && error) {
