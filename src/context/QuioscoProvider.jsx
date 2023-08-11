@@ -76,6 +76,30 @@ const QuioscoProvider = ({children}) => {
 
     }
 
+    const handleSubmitNuevaOrden = async() => {
+        const token = localStorage.getItem('AUTH_TOKEN');
+        try {
+            await clienteAxios.post('/api/pedidos',
+                {
+                    total,
+                    productos: pedido.map(producto => {
+                        return {
+                            id: producto.id,
+                            cantidad: producto.cantidad
+                        }
+                    })
+
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+        } catch (error) {
+
+        }
+    }
+
 
     return (
         <QuioscoContext.Provider
@@ -91,7 +115,8 @@ const QuioscoProvider = ({children}) => {
                 handleAgregarPedido,
                 handleEditarCantidad,
                 handleEliminarProducto,
-                total
+                total,
+                handleSubmitNuevaOrden
             }}
         >{children}
         </QuioscoContext.Provider>
