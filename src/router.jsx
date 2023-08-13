@@ -43,7 +43,7 @@ const router = createBrowserRouter([
                 element: <Ordenes />
             },
             {
-                index: '/admin/productos',
+                path: '/admin/productos',
                 element: <Productos />
             },
         ]

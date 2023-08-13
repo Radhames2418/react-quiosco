@@ -2,9 +2,9 @@ import React from 'react'
 import {formatearDinero} from "../helpers/index.js";
 import useQuiosco from "../hooks/useQuiosco.js";
 
-function Producto({ producto }) {
+function Producto({ producto, botonAgregar = false, botonDisponible = false }) {
 
-    const { handleClickModal, handleSetProducto } = useQuiosco();
+    const { handleClickModal, handleSetProducto, handleClickProductoAgotado } = useQuiosco();
 
     const { nombre, imagen, precio } = producto;
 
@@ -22,16 +22,28 @@ function Producto({ producto }) {
                 <h3 className="text-2xl font-bold">{nombre}</h3>
                 <p className="mt-5 font-black text-4xl text-amber-500 ">{formatearDinero(precio)}</p>
 
-                <button
-                    type='button'
-                    className={'bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold'}
-                    onClick={() => {
-                        handleSetProducto(producto)
-                        handleClickModal()
-                    }}
-                >
-                    agregar
-                </button>
+                {botonAgregar && (
+                    <button
+                        type='button'
+                        className={'bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold'}
+                        onClick={() => {
+                            handleSetProducto(producto)
+                            handleClickModal()
+                        }}
+                    >
+                        Agregar
+                    </button>
+                )}
+
+                {botonDisponible && (
+                    <button
+                        type='button'
+                        className={'bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold'}
+                        onClick={() => { handleClickProductoAgotado(producto.id) }}
+                    >
+                        Producto Agotado
+                    </button>
+                )}
             </div>
         </div>
     );

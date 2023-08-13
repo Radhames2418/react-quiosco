@@ -1,7 +1,13 @@
 import {Outlet} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import {ToastContainer} from "react-toastify";
-export default function AuthLayout(props) {
+import {useAuth} from "../hooks/useAuth.js";
+export default function AuthLayout() {
+
+    useAuth({
+        middleware: 'guest'
+    });
+
     return (
         <div className="max-w-4xl m-auto mt-10 md:mt-28 flex flex-col md:flex-row items-center">
             <img
